@@ -5,10 +5,11 @@ import PropertyCard from '../components/PropertyCard'
 import SkeletonCard from '../components/SkeletonCard'
 
 const NAV_LINKS = [
-  { label: 'About',    section: 'about' },
-  { label: 'Listings', section: 'listings' },
-  { label: 'Reviews',  section: 'reviews' },
-  { label: 'Our Team', section: 'realtors' },
+  { label: 'About',      section: 'about' },
+  { label: 'Listings',   section: 'listings' },
+  { label: 'Reviews',    section: 'reviews' },
+  { label: 'Our Team',   section: 'realtors' },
+  { label: 'Contact Us', section: 'contact' },
 ]
 
 function ResultsNav() {

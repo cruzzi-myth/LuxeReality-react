@@ -29,7 +29,7 @@ export default function Navbar() {
         </Link>
 
         <ul className="nav-links">
-          <li><a href="#">Home</a></li>
+          <li><Link to="/">Home</Link></li>
           {LINKS.map((link) => (
             <li key={link.href}>
               <a href={link.href}>{link.label}</a>
@@ -49,7 +49,7 @@ export default function Navbar() {
         <button className="mobile-close" onClick={() => setMenuOpen(false)}>
           <i className="fa-solid fa-xmark" />
         </button>
-        <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
+        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         {LINKS.map((link) => (
           <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
             {link.label}

@@ -27,13 +27,14 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (location.hash) {
-      const el = document.querySelector(location.hash)
+    const section = location.state?.scrollTo
+    if (section) {
+      const el = document.getElementById(section)
       if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100)
     } else {
       window.scrollTo({ top: 0 })
     }
-  }, [location.hash])
+  }, [location.state])
 
   return (
     <>

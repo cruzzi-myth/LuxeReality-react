@@ -5,13 +5,14 @@ import PropertyCard from '../components/PropertyCard'
 import SkeletonCard from '../components/SkeletonCard'
 
 const NAV_LINKS = [
-  { label: 'About',    to: '/explore#about' },
-  { label: 'Listings', to: '/explore#listings' },
-  { label: 'Reviews',  to: '/explore#reviews' },
-  { label: 'Our Team', to: '/explore#realtors' },
+  { label: 'About',    section: 'about' },
+  { label: 'Listings', section: 'listings' },
+  { label: 'Reviews',  section: 'reviews' },
+  { label: 'Our Team', section: 'realtors' },
 ]
 
 function ResultsNav() {
+  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -20,6 +21,11 @@ function ResultsNav() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const goSection = (section) => {
+    navigate('/explore', { state: { scrollTo: section } })
+    setMenuOpen(false)
+  }
 
   return (
     <>
@@ -34,7 +40,7 @@ function ResultsNav() {
         <ul className="nav-links">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
-              <Link to={link.to}>{link.label}</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); goSection(link.section) }}>{link.label}</a>
             </li>
           ))}
           <li><Link to="/explore" className="nav-cta">Browse All</Link></li>
@@ -50,9 +56,9 @@ function ResultsNav() {
           <i className="fa-solid fa-xmark" />
         </button>
         {NAV_LINKS.map((link) => (
-          <Link key={link.label} to={link.to} onClick={() => setMenuOpen(false)}>
+          <a key={link.label} href="#" onClick={(e) => { e.preventDefault(); goSection(link.section) }}>
             {link.label}
-          </Link>
+          </a>
         ))}
         <Link to="/explore" onClick={() => setMenuOpen(false)}>Browse All</Link>
       </div>

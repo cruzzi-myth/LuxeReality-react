@@ -2,15 +2,19 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const LINKS = [
-  { href: '#about',    label: 'About' },
-  { href: '#listings', label: 'Listings' },
-  { href: '#reviews',  label: 'Reviews' },
-  { href: '#realtors', label: 'Our Team' },
+  { id: 'about',    label: 'About' },
+  { id: 'listings', label: 'Listings' },
+  { id: 'reviews',  label: 'Reviews' },
+  { id: 'realtors', label: 'Our Team' },
 ]
 
+const scrollTo = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
+
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
-  const [menuOpen, setMenuOpen]   = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -31,12 +35,12 @@ export default function Navbar() {
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           {LINKS.map((link) => (
-            <li key={link.href}>
-              <a href={link.href}>{link.label}</a>
+            <li key={link.id}>
+              <a href="#" onClick={(e) => { e.preventDefault(); scrollTo(link.id) }}>{link.label}</a>
             </li>
           ))}
           <li>
-            <a href="#contact" className="nav-cta">Contact Us</a>
+            <a href="#" className="nav-cta" onClick={(e) => { e.preventDefault(); scrollTo('contact') }}>Contact Us</a>
           </li>
         </ul>
 
@@ -51,11 +55,11 @@ export default function Navbar() {
         </button>
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         {LINKS.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+          <a key={link.id} href="#" onClick={(e) => { e.preventDefault(); scrollTo(link.id); setMenuOpen(false) }}>
             {link.label}
           </a>
         ))}
-        <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); scrollTo('contact'); setMenuOpen(false) }}>Contact</a>
       </div>
     </>
   )

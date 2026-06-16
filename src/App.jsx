@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useListings } from './hooks/useListings'
 
 import Navbar from './components/Navbar'
@@ -13,6 +14,7 @@ import ScrollTopButton from './components/ScrollTopButton'
 
 export default function App() {
   const { listings, loading, error, searchCity } = useListings()
+  const location = useLocation()
 
   const handleHeroSearch = (query) => {
     if (query.trim()) {
@@ -23,6 +25,15 @@ export default function App() {
   useEffect(() => {
     document.title = 'LuxeRealty | Find Your Dream Home'
   }, [])
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash)
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100)
+    } else {
+      window.scrollTo({ top: 0 })
+    }
+  }, [location.hash])
 
   return (
     <>

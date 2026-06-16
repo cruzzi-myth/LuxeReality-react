@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 const NAV_LINKS = [
-  { href: '#about',    label: 'About',    to: '/explore' },
-  { href: '#listings', label: 'Listings', to: '/explore' },
-  { href: '#reviews',  label: 'Reviews',  to: '/explore' },
-  { href: '#realtors', label: 'Our Team', to: '/explore' },
+  { label: 'About',    to: '/explore#about' },
+  { label: 'Listings', to: '/explore#listings' },
+  { label: 'Reviews',  to: '/explore#reviews' },
+  { label: 'Our Team', to: '/explore#realtors' },
 ]
 
 const TYPE_CHIPS = ['All', 'Single Family', 'Condo', 'Townhouse', 'Multi-Family']

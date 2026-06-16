@@ -5,10 +5,10 @@ import PropertyCard from '../components/PropertyCard'
 import SkeletonCard from '../components/SkeletonCard'
 
 const NAV_LINKS = [
-  { label: 'About',    to: '/explore' },
-  { label: 'Listings', to: '/explore' },
-  { label: 'Reviews',  to: '/explore' },
-  { label: 'Our Team', to: '/explore' },
+  { label: 'About',    to: '/explore#about' },
+  { label: 'Listings', to: '/explore#listings' },
+  { label: 'Reviews',  to: '/explore#reviews' },
+  { label: 'Our Team', to: '/explore#realtors' },
 ]
 
 function ResultsNav() {

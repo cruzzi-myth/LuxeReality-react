@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const NAV_LINKS = [
-  { href: '/explore#about',    label: 'About' },
-  { href: '/explore#listings', label: 'Listings' },
-  { href: '/explore#reviews',  label: 'Reviews' },
-  { href: '/explore#realtors', label: 'Our Team' },
+  { href: '#about',    label: 'About',    to: '/explore' },
+  { href: '#listings', label: 'Listings', to: '/explore' },
+  { href: '#reviews',  label: 'Reviews',  to: '/explore' },
+  { href: '#realtors', label: 'Our Team', to: '/explore' },
 ]
 
 const TYPE_CHIPS = ['All', 'Single Family', 'Condo', 'Townhouse', 'Multi-Family']
@@ -32,18 +32,22 @@ function HomeNav() {
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
-        <a href="/" className="nav-logo">
+        <Link to="/" className="nav-logo">
           <div className="nav-logo-icon">
             <i className="fa-solid fa-building-columns" />
           </div>
           <span className="nav-logo-text">LuxeRealty</span>
-        </a>
+        </Link>
+
         <ul className="nav-links">
           {NAV_LINKS.map((link) => (
-            <li key={link.href}><a href={link.href}>{link.label}</a></li>
+            <li key={link.label}>
+              <Link to={link.to}>{link.label}</Link>
+            </li>
           ))}
-          <li><a href="/explore" className="nav-cta">Browse All</a></li>
+          <li><Link to="/explore" className="nav-cta">Browse All</Link></li>
         </ul>
+
         <button className="hamburger" onClick={() => setMenuOpen(true)} aria-label="Open menu">
           <span /><span /><span />
         </button>
@@ -54,9 +58,11 @@ function HomeNav() {
           <i className="fa-solid fa-xmark" />
         </button>
         {NAV_LINKS.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+          <Link key={link.label} to={link.to} onClick={() => setMenuOpen(false)}>
+            {link.label}
+          </Link>
         ))}
-        <a href="/explore" onClick={() => setMenuOpen(false)}>Browse All</a>
+        <Link to="/explore" onClick={() => setMenuOpen(false)}>Browse All</Link>
       </div>
     </>
   )
@@ -81,8 +87,7 @@ export default function HomePage() {
     navigate(`/results?${params.toString()}`)
   }
 
-  const handleSearch = () => goToResults(city, state, selectedType)
-
+  const handleSearch  = () => goToResults(city, state, selectedType)
   const handleKeyDown = (e) => { if (e.key === 'Enter') handleSearch() }
 
   const handleQuickCity = (q) => {

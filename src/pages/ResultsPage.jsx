@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate, Link } from 'react-router-dom'
 import { rentcast } from '../lib/rentcast'
 import PropertyCard from '../components/PropertyCard'
 import SkeletonCard from '../components/SkeletonCard'
 
 const NAV_LINKS = [
-  { href: '/explore#about',    label: 'About' },
-  { href: '/explore#listings', label: 'Listings' },
-  { href: '/explore#reviews',  label: 'Reviews' },
-  { href: '/explore#realtors', label: 'Our Team' },
+  { label: 'About',    to: '/explore' },
+  { label: 'Listings', to: '/explore' },
+  { label: 'Reviews',  to: '/explore' },
+  { label: 'Our Team', to: '/explore' },
 ]
 
 function ResultsNav() {
@@ -24,18 +24,22 @@ function ResultsNav() {
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
-        <a href="/" className="nav-logo">
+        <Link to="/" className="nav-logo">
           <div className="nav-logo-icon">
             <i className="fa-solid fa-building-columns" />
           </div>
           <span className="nav-logo-text">LuxeRealty</span>
-        </a>
+        </Link>
+
         <ul className="nav-links">
           {NAV_LINKS.map((link) => (
-            <li key={link.href}><a href={link.href}>{link.label}</a></li>
+            <li key={link.label}>
+              <Link to={link.to}>{link.label}</Link>
+            </li>
           ))}
-          <li><a href="/explore" className="nav-cta">Browse All</a></li>
+          <li><Link to="/explore" className="nav-cta">Browse All</Link></li>
         </ul>
+
         <button className="hamburger" onClick={() => setMenuOpen(true)} aria-label="Open menu">
           <span /><span /><span />
         </button>
@@ -46,9 +50,11 @@ function ResultsNav() {
           <i className="fa-solid fa-xmark" />
         </button>
         {NAV_LINKS.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+          <Link key={link.label} to={link.to} onClick={() => setMenuOpen(false)}>
+            {link.label}
+          </Link>
         ))}
-        <a href="/explore" onClick={() => setMenuOpen(false)}>Browse All</a>
+        <Link to="/explore" onClick={() => setMenuOpen(false)}>Browse All</Link>
       </div>
     </>
   )
@@ -68,14 +74,11 @@ export default function ResultsPage() {
 
   useEffect(() => {
     document.title = `LuxeRealty | ${city}, ${state} Results`
-    if (!city || !state) {
-      navigate('/')
-      return
-    }
+    if (!city || !state) { navigate('/'); return }
 
     let cancelled = false
 
-    const fetch = async () => {
+    const fetchResults = async () => {
       setLoading(true)
       setError(null)
 
@@ -84,7 +87,6 @@ export default function ResultsPage() {
         if (type && type !== 'All') params.propertyType = type
 
         const res = await rentcast.get('/listings/sale', { params })
-
         if (cancelled) return
 
         let data = res.data
@@ -108,7 +110,7 @@ export default function ResultsPage() {
       }
     }
 
-    fetch()
+    fetchResults()
     return () => { cancelled = true }
   }, [city, state, type])
 
@@ -122,9 +124,9 @@ export default function ResultsPage() {
         <div className="home-blob home-blob-1" style={{ opacity: 0.5 }} />
         <div className="home-blob home-blob-2" style={{ opacity: 0.4 }} />
         <div className="results-hero-inner">
-          <a href="/" className="results-back">
+          <Link to="/" className="results-back">
             <i className="fa-solid fa-arrow-left" /> New Search
-          </a>
+          </Link>
           <h1 className="results-title">
             {loading
               ? 'Searching listings…'
@@ -150,9 +152,9 @@ export default function ResultsPage() {
                 <i className="fa-solid fa-house-circle-xmark" />
                 <h3>No Results Found</h3>
                 <p>{error}</p>
-                <a href="/" className="results-back-link">
+                <Link to="/" className="results-back-link">
                   <i className="fa-solid fa-arrow-left" /> Back to search
-                </a>
+                </Link>
               </div>
             )}
 
@@ -163,12 +165,12 @@ export default function ResultsPage() {
 
           {!loading && !error && results.length > 0 && (
             <div className="results-footer">
-              <a href="/" className="results-back-link">
+              <Link to="/" className="results-back-link">
                 <i className="fa-solid fa-arrow-left" /> New Search
-              </a>
-              <a href="/explore" className="home-browse-all">
+              </Link>
+              <Link to="/explore" className="home-browse-all">
                 Browse all listings <i className="fa-solid fa-arrow-right" />
-              </a>
+              </Link>
             </div>
           )}
         </div>

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '#about', label: 'About' },
+  { href: '#about',    label: 'About' },
   { href: '#listings', label: 'Listings' },
-  { href: '#reviews', label: 'Reviews' },
+  { href: '#reviews',  label: 'Reviews' },
   { href: '#realtors', label: 'Our Team' },
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled]   = useState(false)
+  const [menuOpen, setMenuOpen]   = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -21,14 +21,15 @@ export default function Navbar() {
   return (
     <>
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
-        <a href="/" className="nav-logo">
+        <Link to="/" className="nav-logo">
           <div className="nav-logo-icon">
             <i className="fa-solid fa-building-columns" />
           </div>
           <span className="nav-logo-text">LuxeRealty</span>
-        </a>
+        </Link>
 
         <ul className="nav-links">
+          <li><a href="#">Home</a></li>
           {LINKS.map((link) => (
             <li key={link.href}>
               <a href={link.href}>{link.label}</a>
@@ -40,9 +41,7 @@ export default function Navbar() {
         </ul>
 
         <button className="hamburger" onClick={() => setMenuOpen(true)} aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span /><span /><span />
         </button>
       </nav>
 
@@ -50,6 +49,7 @@ export default function Navbar() {
         <button className="mobile-close" onClick={() => setMenuOpen(false)}>
           <i className="fa-solid fa-xmark" />
         </button>
+        <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
         {LINKS.map((link) => (
           <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
             {link.label}

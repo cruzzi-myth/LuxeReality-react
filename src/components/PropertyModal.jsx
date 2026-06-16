@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import {
   formatPrice,
   formatDate,
@@ -171,9 +172,9 @@ export default function PropertyModal({ property, img, onClose }) {
                 <i className="fa-solid fa-map-location-dot" /> View on Map
               </a>
             )}
-            <a href="/explore" className="prop-modal-explore-btn">
+            <Link to="/explore" className="prop-modal-explore-btn">
               Browse All Listings <i className="fa-solid fa-arrow-right" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
